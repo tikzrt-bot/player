@@ -1,12 +1,22 @@
-[
-    {
-        "name": "示例音频1",
-        "url": "audio/track1.mp3",
-        "duration": 180
-    },
-    {
-        "name": "示例音频2",
-        "url": "audio/track2.mp3",
-        "duration": 240
-    }
-]
+[                                                                                                                                                                                                       
+      {                                                                                                                                                                                                   
+          "name": "百日英文12读课文",                                                                                                                                                                     
+          "url": "audio/百日英文12读课文.mp3",                                                                                                                                                            
+          "duration": 53,                                                                                                                                                                                 
+          "textData": [                                                                                                                                                                                   
+              {                                                                                                                                                                                           
+                  "content": "12"                                                                                                                                                                         
+              }                                                                                                                                                                                           
+          ]                                                                                                                                                                                               
+      },                                                                                                                                                                                                  
+      {                                                                                                                                                                                                   
+          "name": "百日英文13课文",                                                                                                                                                                       
+          "url": "audio/百日英文13课文.mp3",                                                                                                                                                              
+          "duration": 51,                                                                                                                                                                                 
+          "textData": [                                                                                                                                                                                   
+              {                                                                                                                                                                                           
+                  "content": "13"                                                                                                                                                                         
+              }                                                                                                                                                                                           
+          ]                                                                                                                                                                                               
+      }                                                                                                                                                                                                   
+  ]        
