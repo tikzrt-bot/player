@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 全能英语玩家100天音频加餐包</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>后台管理</h1>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-top: 8px;">全能英语玩家100天音频加餐包</p>
+        </header>
+
+        <!-- 登录界面 -->
+        <div class="permission-section" id="permission-section">
+            <div class="password-container">
+                <input type="password" id="password-input" placeholder="请输入管理密码" maxlength="20">
+                <button id="login-btn" class="login-btn">登录后台</button>
+                <p class="error-message" id="error-message">密码错误</p>
+            </div>
+        </div>
+
+        <!-- 管理界面 -->
+        <div class="admin-content" id="admin-content" style="display: none;">
+            <div class="admin-info">
+                <p class="admin-notice">上传的音频将自动保存到数据库，点击播放列表中的音频可以编辑文本内容</p>
+            </div>
+
+            <div class="upload-section">
+                <div class="upload-group">
+                    <label class="upload-btn">
+                        <input type="file" id="audio-input" accept="audio/*" multiple hidden>
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                        </svg>
+                        上传音频
+                    </label>
+                    <p class="upload-hint">支持 MP3, WAV, M4A 等音频格式，上传后点击音频可编辑文本</p>
+                </div>
+            </div>
+
+            <div class="save-feedback" id="save-feedback" style="display: none;">
+                <div class="success-message">
+                    <svg viewBox="0 0 24 24" fill="#4CAF50">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    <span>上传成功！</span>
+                </div>
+            </div>
+
+            <div class="playlist-section">
+                <h3>播放列表 <span id="track-count">(0 首)</span></h3>
+                <ul id="playlist" class="playlist">
+                    <li class="empty-message">暂无音频，请上传</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑弹窗 -->
+    <div class="edit-modal" id="edit-modal" style="display: none;">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>编辑音频内容</h2>
+                <button class="modal-close-btn" id="modal-close-btn" title="关闭">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-info">
+                    <p><strong>音频名称：</strong><span id="edit-track-name"></span></p>
+                    <p><strong>音频时长：</strong><span id="edit-track-duration"></span></p>
+                </div>
+                <div class="edit-text-section">
+                    <label for="edit-text-input">文本内容</label>
+                    <textarea id="edit-text-input" class="edit-text-input" placeholder="请输入音频的文本内容，支持多行输入..." rows="12"></textarea>
+                    <p class="edit-text-hint">每行一句话，修改后点击保存即可更新</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-cancel" id="modal-cancel-btn">取消</button>
+                <button class="modal-btn modal-btn-save" id="modal-save-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/>
+                    </svg>
+                    保存修改
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio"></audio>
+
+    <script src="admin.js"></script>
+</body>
+</html>
