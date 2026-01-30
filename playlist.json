@@ -1,0 +1,12 @@
+[
+    {
+        "name": "示例音频1",
+        "url": "audio/track1.mp3",
+        "duration": 180
+    },
+    {
+        "name": "示例音频2",
+        "url": "audio/track2.mp3",
+        "duration": 240
+    }
+]
