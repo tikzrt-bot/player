@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全能英语玩家100天音频加餐包</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-badge">🎧 100天音频加餐</div>
+            <h1 class="hero-title">全能英语玩家</h1>
+        </div>
+    </section>
+
+    <div class="container" id="player-section">
+        <div class="player-section scroll-animate">
+            <div class="current-track">
+                <div class="track-info">
+                    <h2 id="track-name">未选择音频</h2>
+                    <p id="track-status">请加载播放列表</p>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <span id="current-time" class="time">0:00</span>
+                <input type="range" id="progress-bar" class="progress-bar" value="0" min="0" max="100" step="0.1">
+                <span id="duration" class="time">0:00</span>
+            </div>
+
+            <div class="controls">
+                <button id="prev-btn" class="control-btn" title="上一首">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                    </svg>
+                </button>
+                <button id="rewind-btn" class="control-btn skip-btn" title="倒退10秒">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/>
+                    </svg>
+                    <span class="skip-label">10s</span>
+                </button>
+                <button id="play-btn" class="control-btn primary" title="播放/暂停">
+                    <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <button id="forward-btn" class="control-btn skip-btn" title="前进10秒">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 18l8.5-6L4 6v12zm8.5 0l8.5-6-8.5-6v12z"/>
+                    </svg>
+                    <span class="skip-label">10s</span>
+                </button>
+                <button id="next-btn" class="control-btn" title="下一首">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="playback-controls">
+                <div class="speed-control">
+                    <label for="speed-select">倍速</label>
+                    <select id="speed-select">
+                        <option value="0.5">0.5x</option>
+                        <option value="0.75">0.75x</option>
+                        <option value="1.0" selected>1.0x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="2.0">2.0x</option>
+                    </select>
+                </div>
+
+                <div class="mode-control">
+                    <button id="mode-btn" class="mode-btn" title="切换播放模式">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                        </svg>
+                        <span id="mode-text">顺序播放</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-toggle-section scroll-animate">
+            <button id="text-toggle-btn" class="text-toggle-btn" title="显示/隐藏文本">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V8h8v2z"/>
+                </svg>
+                <span>显示文本</span>
+            </button>
+        </div>
+
+        <div class="lyrics-section scroll-animate" id="lyrics-section" style="display: none;">
+            <h3>文本</h3>
+            <div id="lyrics-container" class="lyrics-container">
+                <p class="no-lyrics">暂无文本内容</p>
+            </div>
+        </div>
+
+        <div class="playlist-section scroll-animate">
+            <h3>播放列表 <span id="track-count"></span></h3>
+            <div id="playlist" class="playlist-cards">
+                <div class="empty-message">加载中...</div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio"></audio>
+
+    <script src="public.js"></script>
+</body>
+</html>
