@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "https://tikzrt-bot.github.io/player/:path*"
-    }
-  ]
-}
