@@ -1328,11 +1328,61 @@ body::after {
 @media (max-width: 480px) {
     body {
         padding: 12px;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .hero-section {
+        position: relative;
+        width: 80px;
+        flex-shrink: 0;
+        padding: 12px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-content {
+        margin: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-badge {
+        margin-bottom: 12px;
+        padding: 8px 6px;
+        font-size: 10px;
+        background: rgba(215, 0, 80, 0.2);
+        border: 1px solid rgba(215, 0, 80, 0.3);
+        border-radius: 50px;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        letter-spacing: 2px;
+    }
+
+    .hero-title {
+        font-size: 20px;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        letter-spacing: 2px;
+        line-height: 1.2;
     }
 
     .container {
-        padding: 20px 16px;
+        flex: 1;
+        padding: 16px;
         border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
     }
 
     .header h1 {
@@ -1347,6 +1397,11 @@ body::after {
         font-size: 18px;
     }
 
+    .controls {
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
     .control-btn {
         width: 44px;
         height: 44px;
@@ -1358,27 +1413,42 @@ body::after {
     }
 
     .control-btn.primary {
-        width: 58px;
-        height: 58px;
+        width: 54px;
+        height: 54px;
     }
 
     .control-btn.primary svg {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
     }
 
     .skip-btn {
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
     }
 
     .skip-btn svg {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
     }
 
     .skip-label {
-        font-size: 9px;
+        font-size: 8px;
+    }
+
+    .player-section {
+        flex-shrink: 0;
+        margin-bottom: 16px;
+    }
+
+    .text-toggle-section {
+        flex-shrink: 0;
+        margin-bottom: 12px;
+    }
+
+    .lyrics-section {
+        flex-shrink: 0;
+        margin-bottom: 12px;
     }
 
     .lyrics-container {
@@ -1390,6 +1460,19 @@ body::after {
         font-size: 14px;
         padding: 8px 12px;
         margin-bottom: 5px;
+    }
+
+    .playlist-section {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 0;
+        margin-bottom: 0;
+    }
+
+    .playlist-cards {
+        max-height: none;
+        overflow: visible;
     }
 
     .text-toggle-btn {
