@@ -232,7 +232,9 @@ class PublicPlayer {
         console.log('时长:', track.duration);
         console.log('文本数据:', track.textData);
 
-        this.audio.src = track.url;
+        // 使用 CDN 加速音频文件，并启用预加载
+        this.audio.src = this.getCDNUrl(track.url);
+        this.audio.preload = 'auto';
         this.audio.load();
 
         this.trackName.textContent = track.name;
@@ -413,7 +415,7 @@ class PublicPlayer {
 
     updatePlaylistUI() {
         if (this.playlist.length === 0) {
-            this.playlistEl.innerHTML = '<div class="empty-message scroll-animate">暂无音频</div>';
+            this.playlistEl.innerHTML = '<div class="empty-message">暂无音频</div>';
             return;
         }
 
@@ -421,11 +423,8 @@ class PublicPlayer {
             const isActive = index === this.currentIndex;
             const isPlaying = isActive && this.isPlaying;
 
-            // 添加延迟类
-            const delayClass = `delay-${Math.min(index, 5)}`;
-
             return `
-                <div class="playlist-card scroll-animate ${delayClass} ${isActive ? 'active' : ''} ${isPlaying ? 'playing' : ''}" data-index="${index}">
+                <div class="playlist-card ${isActive ? 'active' : ''} ${isPlaying ? 'playing' : ''}" data-index="${index}">
                     <div class="card-icon">
                         ${isPlaying ? '<div class="playing-animation"></div>' : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>'}
                     </div>
@@ -449,11 +448,6 @@ class PublicPlayer {
                 }
             });
         });
-
-        // 重新观察新添加的元素
-        if (this.observeScrollElements) {
-            this.observeScrollElements();
-        }
     }
 
     formatTime(seconds) {
@@ -464,33 +458,35 @@ class PublicPlayer {
     }
 
     initScrollAnimations() {
-        // 创建 Intersection Observer 用于滚动动画
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    // 添加延迟以实现交错效果
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-visible');
-                    }, index * 100);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // 观察所有带有 scroll-animate 类的元素
+        // 立即显示所有元素，不使用延迟动画
         this.observeScrollElements = () => {
             const scrollElements = document.querySelectorAll('.scroll-animate');
-            scrollElements.forEach(el => observer.observe(el));
+            scrollElements.forEach(el => {
+                el.classList.add('animate-visible');
+            });
         };
 
-        // 初始观察
-        setTimeout(() => this.observeScrollElements(), 100);
+        // 立即执行，不使用延迟
+        this.observeScrollElements();
+    }
+
+    // 将 GitHub raw URL 转换为 jsDelivr CDN URL（国内访问更快）
+    getCDNUrl(url) {
+        if (!url || !url.includes('raw.githubusercontent.com')) {
+            return url;
+        }
+
+        // 转换: https://raw.githubusercontent.com/user/repo/branch/file.mp3
+        // 到: https://cdn.jsdelivr.net/gh/user/repo@branch/file.mp3
+        const cdnUrl = url.replace(
+            'https://raw.githubusercontent.com',
+            'https://cdn.jsdelivr.net/gh'
+        );
+
+        console.log(`🚀 CDN加速: ${url.substring(0, 50)}...`);
+        console.log(`   → ${cdnUrl.substring(0, 50)}...`);
+
+        return cdnUrl;
     }
 }
 
