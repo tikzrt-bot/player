@@ -10,6 +10,10 @@ class PublicPlayer {
         this.currentTextData = null;
         this.currentTextIndex = -1;
 
+        // 创建预加载用的音频元素
+        this.preloadAudio = new Audio();
+        this.preloadAudio.preload = 'auto';
+
         console.log('初始化PublicPlayer');
         this.initElements();
         this.bindEvents();
@@ -115,6 +119,25 @@ class PublicPlayer {
                     duration: track.duration,
                     textData: track.textData || null
                 }));
+            })
+            .then(tracks => {
+                // 开始预加载第一首
+                if (tracks.length > 0) {
+                    const firstTrackUrl = this.getCDNUrl(tracks[0].url);
+                    console.log('开始预加载第一首:', tracks[0].name);
+                    this.audio.src = firstTrackUrl;
+                    this.audio.preload = 'auto';
+                    this.audio.load();
+
+                    // 同时预加载第二首
+                    if (tracks.length > 1) {
+                        const secondTrackUrl = this.getCDNUrl(tracks[1].url);
+                        console.log('开始预加载第二首:', tracks[1].name);
+                        this.preloadAudio.src = secondTrackUrl;
+                        this.preloadAudio.load();
+                    }
+                }
+                return tracks;
             });
     }
 
@@ -221,29 +244,29 @@ class PublicPlayer {
     }
 
     loadTrack(index) {
-        console.log('加载曲目，索引:', index);
-
         if (index < 0 || index >= this.playlist.length) return;
 
         this.currentIndex = index;
         const track = this.playlist[index];
 
-        console.log('曲目名称:', track.name);
-        console.log('时长:', track.duration);
-        console.log('文本数据:', track.textData);
+        console.log('加载曲目:', track.name);
 
-        // 使用 CDN 加速音频文件，并启用预加载
-        this.audio.src = this.getCDNUrl(track.url);
+        // 优先加载音频
+        const cdnUrl = this.getCDNUrl(track.url);
+        this.audio.src = cdnUrl;
         this.audio.preload = 'auto';
         this.audio.load();
 
+        // 立即预加载下一首
+        this.preloadNextTrack();
+
+        // 然后更新 UI
         this.trackName.textContent = track.name;
         this.trackStatus.textContent = this.playMode === 'loop' ? '单曲循环' : '顺序播放';
 
         // Load text data
         this.currentTextData = track.textData || null;
         this.currentTextIndex = -1;
-        console.log('设置 currentTextData:', this.currentTextData);
         this.updateLyricsDisplay();
 
         // 根据当前显示状态设置文本区域
@@ -256,18 +279,28 @@ class PublicPlayer {
         }
     }
 
+    preloadNextTrack() {
+        const nextIndex = this.currentIndex + 1;
+        if (nextIndex < this.playlist.length) {
+            const nextTrack = this.playlist[nextIndex];
+            const nextUrl = this.getCDNUrl(nextTrack.url);
+            console.log('预加载下一首:', nextTrack.name);
+            this.preloadAudio.src = nextUrl;
+            this.preloadAudio.load();
+        }
+    }
+
     togglePlay() {
         if (this.playlist.length === 0) return;
 
-        console.log('togglePlay 被调用，当前播放状态:', this.isPlaying);
-        console.log('audio.paused:', this.audio.paused);
-
         if (this.audio.paused) {
-            console.log('音频已暂停，开始播放');
+            // 确保 audio 已加载
+            if (!this.audio.src && this.playlist.length > 0) {
+                this.loadTrack(0);
+            }
             this.audio.play();
             this.isPlaying = true;
         } else {
-            console.log('音频正在播放，停止播放');
             this.audio.pause();
             this.isPlaying = false;
         }
@@ -296,9 +329,31 @@ class PublicPlayer {
         } else {
             const newIndex = this.currentIndex + 1;
             if (newIndex < this.playlist.length) {
-                this.loadTrack(newIndex);
-                if (this.isPlaying) {
-                    this.audio.play();
+                // 检查下一首是否已经预加载
+                const nextTrack = this.playlist[newIndex];
+                const nextUrl = this.getCDNUrl(nextTrack.url);
+
+                if (this.preloadAudio.src && this.preloadAudio.src.includes(nextUrl)) {
+                    // 使用预加载的音频
+                    console.log('使用预加载的音频');
+                    this.audio.src = this.preloadAudio.src;
+                    this.currentIndex = newIndex;
+                    this.trackName.textContent = nextTrack.name;
+                    this.trackStatus.textContent = this.playMode === 'loop' ? '单曲循环' : '顺序播放';
+                    this.currentTextData = nextTrack.textData || null;
+                    this.updateLyricsDisplay();
+                    this.updatePlaylistUI();
+                    this.preloadNextTrack();
+
+                    if (this.isPlaying) {
+                        this.audio.play();
+                    }
+                } else {
+                    // 正常加载
+                    this.loadTrack(newIndex);
+                    if (this.isPlaying) {
+                        this.audio.play();
+                    }
                 }
             } else {
                 this.isPlaying = false;
@@ -472,21 +527,24 @@ class PublicPlayer {
 
     // 将 GitHub raw URL 转换为 jsDelivr CDN URL（国内访问更快）
     getCDNUrl(url) {
-        if (!url || !url.includes('raw.githubusercontent.com')) {
+        if (!url) return url;
+
+        // 如果已经是 CDN URL，直接返回
+        if (url.includes('cdn.jsdelivr.net')) {
             return url;
         }
 
-        // 转换: https://raw.githubusercontent.com/user/repo/branch/file.mp3
-        // 到: https://cdn.jsdelivr.net/gh/user/repo@branch/file.mp3
-        const cdnUrl = url.replace(
-            'https://raw.githubusercontent.com',
-            'https://cdn.jsdelivr.net/gh'
-        );
+        // 转换 GitHub raw URL 到 CDN
+        if (url.includes('raw.githubusercontent.com')) {
+            const cdnUrl = url.replace(
+                'https://raw.githubusercontent.com',
+                'https://cdn.jsdelivr.net/gh'
+            );
+            console.log(`🚀 CDN加速: ${url.substring(0, 60)}... → ${cdnUrl.substring(0, 60)}...`);
+            return cdnUrl;
+        }
 
-        console.log(`🚀 CDN加速: ${url.substring(0, 50)}...`);
-        console.log(`   → ${cdnUrl.substring(0, 50)}...`);
-
-        return cdnUrl;
+        return url;
     }
 }
 
