@@ -12,7 +12,7 @@ class PublicPlayer {
 
         // 配置：是否使用 CDN（true）还是原始 URL（false）
         // 如果 CDN 在你所在地区访问慢，改为 false
-        this.useCDN = true;
+        this.useCDN = false;
 
         // 创建预加载用的音频元素
         this.preloadAudio = new Audio();
@@ -51,9 +51,38 @@ class PublicPlayer {
         // 音频加载错误
         this.audio.addEventListener('error', (e) => {
             console.error('音频加载错误:', e);
-            if (this.trackStatus) {
-                this.trackStatus.textContent = '加载失败';
+            console.error('音频 URL:', this.audio.src);
+            console.error('错误代码:', this.audio.error ? this.audio.error.code : 'unknown');
+
+            let errorMsg = '加载失败';
+            if (this.audio.error) {
+                switch (this.audio.error.code) {
+                    case this.audio.error.MEDIA_ERR_ABORTED:
+                        errorMsg = '加载被中断';
+                        break;
+                    case this.audio.error.MEDIA_ERR_NETWORK:
+                        errorMsg = '网络错误';
+                        break;
+                    case this.audio.error.MEDIA_ERR_DECODE:
+                        errorMsg = '音频格式不支持';
+                        break;
+                    case this.audio.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                        errorMsg = '音频源不支持';
+                        break;
+                }
             }
+
+            if (this.trackStatus) {
+                this.trackStatus.textContent = errorMsg;
+            }
+
+            // 尝试重新加载
+            console.log('尝试重新加载...');
+            setTimeout(() => {
+                if (this.currentIndex >= 0) {
+                    this.loadTrack(this.currentIndex);
+                }
+            }, 2000);
         });
     }
 
@@ -267,10 +296,14 @@ class PublicPlayer {
         const track = this.playlist[index];
 
         console.log('加载曲目:', track.name);
+        console.log('原始 URL:', track.url);
 
         // 加载音频
-        const cdnUrl = this.getCDNUrl(track.url);
-        this.audio.src = cdnUrl;
+        const finalUrl = this.getCDNUrl(track.url);
+        console.log('最终 URL:', finalUrl);
+        console.log('使用 CDN:', this.useCDN);
+
+        this.audio.src = finalUrl;
         this.audio.load();
 
         // 更新 UI
