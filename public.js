@@ -10,15 +10,51 @@ class PublicPlayer {
         this.currentTextData = null;
         this.currentTextIndex = -1;
 
+        // 配置：是否使用 CDN（true）还是原始 URL（false）
+        // 如果 CDN 在你所在地区访问慢，改为 false
+        this.useCDN = true;
+
         // 创建预加载用的音频元素
         this.preloadAudio = new Audio();
         this.preloadAudio.preload = 'auto';
 
         console.log('初始化PublicPlayer');
         this.initElements();
+        this.setupLoadingEvents();
         this.bindEvents();
         this.initDB();
         this.initScrollAnimations();
+    }
+
+    setupLoadingEvents() {
+        // 音频加载中
+        this.audio.addEventListener('loadstart', () => {
+            console.log('开始加载音频');
+            if (this.trackStatus) {
+                this.trackStatus.textContent = '加载中...';
+            }
+        });
+
+        // 音频可以播放
+        this.audio.addEventListener('canplay', () => {
+            console.log('音频可以播放了');
+            if (this.trackStatus && this.isPlaying) {
+                this.trackStatus.textContent = this.playMode === 'loop' ? '单曲循环' : '顺序播放';
+            }
+        });
+
+        // 音频加载完成
+        this.audio.addEventListener('canplaythrough', () => {
+            console.log('音频加载完成，可以流畅播放');
+        });
+
+        // 音频加载错误
+        this.audio.addEventListener('error', (e) => {
+            console.error('音频加载错误:', e);
+            if (this.trackStatus) {
+                this.trackStatus.textContent = '加载失败';
+            }
+        });
     }
 
     initElements() {
@@ -119,25 +155,6 @@ class PublicPlayer {
                     duration: track.duration,
                     textData: track.textData || null
                 }));
-            })
-            .then(tracks => {
-                // 开始预加载第一首
-                if (tracks.length > 0) {
-                    const firstTrackUrl = this.getCDNUrl(tracks[0].url);
-                    console.log('开始预加载第一首:', tracks[0].name);
-                    this.audio.src = firstTrackUrl;
-                    this.audio.preload = 'auto';
-                    this.audio.load();
-
-                    // 同时预加载第二首
-                    if (tracks.length > 1) {
-                        const secondTrackUrl = this.getCDNUrl(tracks[1].url);
-                        console.log('开始预加载第二首:', tracks[1].name);
-                        this.preloadAudio.src = secondTrackUrl;
-                        this.preloadAudio.load();
-                    }
-                }
-                return tracks;
             });
     }
 
@@ -251,16 +268,12 @@ class PublicPlayer {
 
         console.log('加载曲目:', track.name);
 
-        // 优先加载音频
+        // 加载音频
         const cdnUrl = this.getCDNUrl(track.url);
         this.audio.src = cdnUrl;
-        this.audio.preload = 'auto';
         this.audio.load();
 
-        // 立即预加载下一首
-        this.preloadNextTrack();
-
-        // 然后更新 UI
+        // 更新 UI
         this.trackName.textContent = track.name;
         this.trackStatus.textContent = this.playMode === 'loop' ? '单曲循环' : '顺序播放';
 
@@ -280,14 +293,8 @@ class PublicPlayer {
     }
 
     preloadNextTrack() {
-        const nextIndex = this.currentIndex + 1;
-        if (nextIndex < this.playlist.length) {
-            const nextTrack = this.playlist[nextIndex];
-            const nextUrl = this.getCDNUrl(nextTrack.url);
-            console.log('预加载下一首:', nextTrack.name);
-            this.preloadAudio.src = nextUrl;
-            this.preloadAudio.load();
-        }
+        // 简化预加载逻辑，避免同时加载太多
+        return;
     }
 
     togglePlay() {
@@ -329,31 +336,9 @@ class PublicPlayer {
         } else {
             const newIndex = this.currentIndex + 1;
             if (newIndex < this.playlist.length) {
-                // 检查下一首是否已经预加载
-                const nextTrack = this.playlist[newIndex];
-                const nextUrl = this.getCDNUrl(nextTrack.url);
-
-                if (this.preloadAudio.src && this.preloadAudio.src.includes(nextUrl)) {
-                    // 使用预加载的音频
-                    console.log('使用预加载的音频');
-                    this.audio.src = this.preloadAudio.src;
-                    this.currentIndex = newIndex;
-                    this.trackName.textContent = nextTrack.name;
-                    this.trackStatus.textContent = this.playMode === 'loop' ? '单曲循环' : '顺序播放';
-                    this.currentTextData = nextTrack.textData || null;
-                    this.updateLyricsDisplay();
-                    this.updatePlaylistUI();
-                    this.preloadNextTrack();
-
-                    if (this.isPlaying) {
-                        this.audio.play();
-                    }
-                } else {
-                    // 正常加载
-                    this.loadTrack(newIndex);
-                    if (this.isPlaying) {
-                        this.audio.play();
-                    }
+                this.loadTrack(newIndex);
+                if (this.isPlaying) {
+                    this.audio.play();
                 }
             } else {
                 this.isPlaying = false;
@@ -528,6 +513,11 @@ class PublicPlayer {
     // 将 GitHub raw URL 转换为 jsDelivr CDN URL（国内访问更快）
     getCDNUrl(url) {
         if (!url) return url;
+
+        // 如果配置不使用 CDN，直接返回原始 URL
+        if (!this.useCDN) {
+            return url;
+        }
 
         // 如果已经是 CDN URL，直接返回
         if (url.includes('cdn.jsdelivr.net')) {
