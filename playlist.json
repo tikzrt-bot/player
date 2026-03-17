@@ -1695,5 +1695,38 @@
                 "content": "Baby, baby, baby, oh"
             }
         ]
+    },
+    {
+        "name": "day78做正确的事",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day78%E5%81%9A%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BA%8B.mp3",
+        "duration": 53,
+        "textData": [
+            {
+                "content": "So doing the right thing, even when nobody knows you're doing the right thing, will always bring the right thing to you. I promise you that. Why? Because the third law of motion is always at work. For every action, there's an equal and opposite reaction. That is so true in all of our lives. That's what Newton said. Celie in The Color Purple said it, everything you even try to do to me, already done to you. Everything you even try to do to me, already done to you. So you don't have to worry about revenge or getting back at somebody, making sure they pay, you just have to do the right thing, and the right thing will follow you, even when people don't support it."
+            }
+        ]
+    },
+    {
+        "name": "day76特种兵旅行（一）",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day76%E7%89%B9%E7%A7%8D%E5%85%B5%E6%97%85%E8%A1%8C%EF%BC%88%E4%B8%80%EF%BC%89.mp3",
+        "duration": 33,
+        "textData": [
+            {
+                "content": "Not long ago, traveling in China meant racing against the clock. Overnight trains, sunrise hikes, and five scenic spots before lunch were worn like badges of honor. The faster and more exhausting the itinerary, the better the story sounded afterward. Today, that logic is being quietly overturned — by young people who have decided that vacations should feel less like boot camp."
+            }
+        ]
+    },
+    {
+        "name": "day77特种兵旅行（二）",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day77%E7%89%B9%E7%A7%8D%E5%85%B5%E6%97%85%E8%A1%8C%EF%BC%88%E4%BA%8C%EF%BC%89.MP3",
+        "duration": 47,
+        "textData": [
+            {
+                "content": "\"I used to come home from trips more tired than before I left,\" said Li Yiran, a 28-year-old office worker from Shanghai. \"Now, if I only see one street, sit for an hour with a cup of tea, and actually remember how the air smelled, that feels like a real journey. I'm not collecting places anymore — I'm collecting moments.\""
+            },
+            {
+                "content": "Across China, \"slow travel\" is emerging as a defining trend, particularly among Gen Z and older millennials. Instead of packing schedules to the brim, travelers are choosing fewer destinations, longer stays and experiences that emphasize immersion over mileage."
+            }
+        ]
     }
 ]
