@@ -1738,5 +1738,56 @@
                 "content": "Hello, my name's Forrest, Forrest Gump. You want a chocolate? I could eat about a million and a half of these. My mama always said, life was like a box of chocolates. You never know what you're gonna get. Those must be comfortable shoes. I'll bet you could walk all day in shoes like that and not feel a thing. I wish I had shoes like that. My feet hurt. Mama always said, there's an awful lot you can tell about a person by their shoes. Where they go, where they been. I've worn lots of shoes. I bet if I think about it real hard, I could remember my first pair of shoes. Mama said they'd take me anywhere. She said they was my magic shoes."
             }
         ]
+    },
+    {
+        "name": "day83遇到你之前",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day83%E9%81%87%E5%88%B0%E4%BD%A0%E4%B9%8B%E5%89%8D.mp3",
+        "duration": 66,
+        "textData": [
+            {
+                "content": "Clark,"
+            },
+            {
+                "content": "A few weeks should have passed by the time you read this. If you followed the instructions, you'll be in Paris on one of those chairs that never sit quite level on the pavement. I hope it's still sunny. Across the bridge to your right, you will see L'Arisan Perfumeur. You should try the scent called the Papillons Extreme. I always did think it would smell great on you. There are a few things I wanted to say and couldn't, because you would have got all emotional and you wouldn't have let me finish. So here it is."
+            },
+            {
+                "content": "When you get back home, Michael Lawler will get you access to a bank account that contains enough to give you a new beginning. Don't start panicking, it's not enough for you to sit around for the rest of your life, but it should buy you your freedom. At least from that little town we both call home."
+            },
+            {
+                "content": "Live boldly, Clark.Push yourself. Don't settle. Wear those stripy legs with pride. Knowing you still have possibilities is a luxury. Knowing I might have given them to you has eased something for me. So this is it."
+            },
+            {
+                "content": "You are scored on my heart, Clark. You were from the first day you walked in with your sweet smile and your ridiculous clothes. And your bad jokes and your complete inability to ever hide a single thing you felt. Don't think of me too often. I don't want you getting sad."
+            },
+            {
+                "content": "Just live well. Just live. I'll be walking beside you every step of the way."
+            },
+            {
+                "content": "Love,"
+            },
+            {
+                "content": "Will"
+            }
+        ]
+    },
+    {
+        "name": "day82美梦告终",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day82%E7%BE%8E%E6%A2%A6%E5%91%8A%E7%BB%88.MP3",
+        "duration": 66,
+        "textData": [
+            {
+                "content": "Tired of sleeping on the floor, a young man in Teheran saved up for years to buy a real bed. For the first time in his life, he became the proud owner of a bed which had springs and a mattress. Because the weather was very hot, he carried the bed on to the roof of his house. He slept very well for the first two nights, but on the third night, a storm blew up. A gust of wind swept the bed off the roof and sent it crashing into the courtyard below. The young man did not wake up until the bed had struck the ground. Although the bed was smashed to pieces, the man was miraculously unhurt. When he woke up, he was still on the mattress. Glancing at the bits of wood and metal that lay around him, the man sadly picked up the mattress and carried it into his house. After he had put it on the floor, he promptly went to sleep again."
+            }
+        ]
+    },
+    {
+        "name": "day81你要说什么",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day81%E4%BD%A0%E8%A6%81%E8%AF%B4%E4%BB%80%E4%B9%88.mp3",
+        "duration": 52,
+        "textData": [
+            {
+                "content": "Dentists always ask questions when it is impossible for you to answer. My dentist had just pulled out one of my teeth and had told me to rest for a while. I tried to say something, but my mouth was full of cotton wool. He knew I collected match boxes and asked me whether my collection was growing. He then asked me how my brother was and whether I liked my new job in London. In answer to these questions I either nodded or made strange noises. Meanwhile, my tongue was busy searching out the hole where the tooth had been. I suddenly felt very worried, but could not say anything. When the dentist at last removed the cotton wool from my mouth, I was able to tell him that he had pulled out the wrong tooth."
+            }
+        ]
     }
 ]
