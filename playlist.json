@@ -2092,5 +2092,25 @@
                 "content": "One day I'll know how far I'll go"
             }
         ]
+    },
+    {
+        "name": "day96占卜未来",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day96%E5%8D%A0%E5%8D%9C%E6%9C%AA%E6%9D%A5.MP3",
+        "duration": 59,
+        "textData": [
+            {
+                "content": "At a village fair, I decided to visit a fortune-teller called Madam Bellinsky. I went into her tent and she told me to sit down. After I had given her some money, she looked into a crystal ball and said: ‘A relation of yours is coming to see you. She will be arriving this evening and intends to stay for a few days. The moment you leave this tent, you will get a big surprise. A woman you know well will rush towards you. She will speak to you and then she will lead you away from this place. That is all.’ As soon as I went outside, I forgot all about Madam Bellinsky because my wife hurried towards me. ‘Where have you been hiding?’ she asked impatiently. ‘Your sister will be here in less than an hour and we must be at the station to meet her. We are late already.’ As she walked away, I followed her out of the fair."
+            }
+        ]
+    },
+    {
+        "name": "day97技术无感情",
+        "url": "https://raw.githubusercontent.com/tikzrt-bot/player/main/day97%E6%8A%80%E6%9C%AF%E6%97%A0%E6%84%9F%E6%83%85.mp3",
+        "duration": 45,
+        "textData": [
+            {
+                "content": "Technology is capable of doing great things, but it doesn't want to do great things. It doesn't want anything. That part takes all of us. It takes our values and our commitment to our families and our neighbors and our communities, our love of beauty and belief that all of our faiths are interconnected, our decency, our kindness. I'm not worried about artificial intelligence giving computers the ability to think like humans. I'm more concerned about people thinking like computers without values or compassion, without concern for consequences. That is what we need you to help us guard against."
+            }
+        ]
     }
 ]
